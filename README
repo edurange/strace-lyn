@@ -1,0 +1,23 @@
+Files in the directory:
+
+copy.c
+empty.c
+mystery.c
+README
+script.sh
+strace-identify
+tiger.txt
+trojaned_cat.c
+
+Directions: 
+
+1. Copy copy.c, empty.c, script.sh, strace-identify, and tiger.txt to a directory 
+   that everyone can read
+
+2. Compile mystery.c to an executable named "mystery" and move it to the same 
+   directory as in Step 1. Delete mystery.c so students can't find it. 
+
+3. Compile trojaned_cat.c to an executable named "cat" and move it to a directory
+   in PATH that comes before /bin (where the "real" /bin/cat lives). 
+   Delete trojaned_cat.c so that students can't find it. 
+

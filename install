@@ -1,0 +1,6 @@
+#!/bin/bash
+cp copy.c empty.c script.sh strace-identify tiger.txt /tmp 
+gcc -o mystery mystery.c
+cp mystery /tmp
+gcc -o cat trojaned_cat.c
+cp cat /usr/local/bin
