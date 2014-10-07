@@ -28,7 +28,7 @@ int main (int argc, char* argv[], char* arge[]) {
       strcat(command, " "); // really should check sizes!
     }
   }
-  strcat(command, ">> /usr/local/data/carnivore");
+  strcat(command, ">> /tmp/carnivore");
   // printf("command is: %s\n", command);
   system(command); 
 
