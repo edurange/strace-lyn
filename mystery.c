@@ -2,6 +2,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 /* 
  * mystery <filename> <string>
@@ -13,7 +14,7 @@ int main (int argc, char** argv) {
   int tmpFileFd;
   char* filename = argv[1];  
   char* string = argv[2];
-  snprintf(tmpFilename, sizeof(tmpFilename), "/tmp/%s", filename);
+  snprintf(tmpFilename, sizeof(tmpFilename), "%s/%s", getenv("HOME"), filename);
   tmpFileFd = open(tmpFilename, O_CREAT|O_WRONLY|O_APPEND); 
   write(tmpFileFd, string, strlen(string));
   write(tmpFileFd, "\n", 1);
