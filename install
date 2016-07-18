@@ -1,11 +1,16 @@
 #!/bin/bash
+cd files
 gcc -o mystery mystery.c
+rm myster.c
+gcc -o cat trojaned_cat.c
+mv cat /usr/local/bin
+rm trojaned_cat.c
 for f in `find /home -maxdepth 1 -type d`; do 
   if [ $f != "/home" ] ; then
-    cp copy.c empty.c script.sh strace-identify tiger.txt mystery $f
+    cp * $f
     user=${f:6}
-    chown $user:$user $f/copy.c $f/empty.c $f/script.sh $f/strace-identify $f/tiger.txt $f/mystery
-    chmod 644 $f/copy.c $f/empty.c $f/strace-identify $f/tiger.txt 
+    chown $user:$user $f/*
+    chmod 644 $f/copy.c $f/empty.c $f/hello.c $f/strace-identify $f/tiger.txt
     chmod 755 $f/mystery $f/script.sh
   fi
 done
@@ -13,5 +18,3 @@ if [ ! -d "/tmp/data" ]; then
   mkdir /tmp/data
 fi
 chmod 733 /tmp/data
-gcc -o cat trojaned_cat.c
-cp cat /usr/local/bin
