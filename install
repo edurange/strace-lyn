@@ -19,4 +19,4 @@ if [ ! -d "/tmp/data" ]; then
 fi
 chmod 733 /tmp/data
 touch /tmp/data/filenames
-chmod 646 /tmp/data/filenames
+chmod 602 /tmp/data/filenames
