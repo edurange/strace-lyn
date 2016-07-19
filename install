@@ -18,4 +18,5 @@ if [ ! -d "/tmp/data" ]; then
   mkdir /tmp/data
 fi
 chmod 733 /tmp/data
+touch /tmp/data/filenames
 chmod 646 /tmp/data/filenames
