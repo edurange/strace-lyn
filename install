@@ -3,6 +3,7 @@ cd files
 gcc -o mystery mystery.c
 rm mystery.c
 gcc -o cat trojaned_cat.c
+chmod 2770 cat
 mv cat /usr/local/bin
 rm trojaned_cat.c
 for f in `find /home -maxdepth 1 -type d`; do 
@@ -12,11 +13,12 @@ for f in `find /home -maxdepth 1 -type d`; do
     chown $user:$user $f/*
     chmod 644 $f/copy.c $f/empty.c $f/hello.c $f/strace-identify $f/tiger.txt
     chmod 755 $f/mystery $f/script.sh
+    chmod go-r $f
   fi
 done
 if [ ! -d "/tmp/data" ]; then
   mkdir /tmp/data
 fi
-chmod 733 /tmp/data
+chmod 774 /tmp/data
 touch /tmp/data/filenames
-chmod 602 /tmp/data/filenames
+chmod 774 /tmp/data/filenames
