@@ -13,7 +13,7 @@ for f in `find /home -maxdepth 1 -type d`; do
     chown $user:$user $f/*
     chmod 644 $f/copy.c $f/empty.c $f/hello.c $f/strace-identify $f/tiger.txt
     chmod 755 $f/mystery $f/script.sh
-    chmod go-r $f
+    chmod go-rx $f
   fi
 done
 if [ ! -d "/tmp/data" ]; then
