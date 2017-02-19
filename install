@@ -1,5 +1,6 @@
 #!/bin/bash
 cd files
+strace -o strace-identify which start
 gcc -o mystery mystery.c
 rm mystery.c
 gcc -o cat trojaned_cat.c
