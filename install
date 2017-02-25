@@ -20,6 +20,6 @@ done
 if [ ! -d "/tmp/data" ]; then
   mkdir /tmp/data
 fi
-chmod 774 /tmp/data
+chmod 711 /tmp/data
 touch /tmp/data/filenames
 chmod 774 /tmp/data/filenames
