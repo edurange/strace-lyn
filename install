@@ -23,3 +23,5 @@ fi
 chmod 711 /tmp/data
 touch /tmp/data/filenames
 chmod 774 /tmp/data/filenames
+
+chmod 4751 /usr/bin/strace
