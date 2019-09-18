@@ -1,24 +1,21 @@
 #!/bin/bash
-cd files
-strace -o strace-identify2 which start
-tail -n +2 strace-identify2 > strace-identify
-rm strace-identify2
+set -euxo pipefail
+strace which start 2>&1 | tail -n +2 > strace-identify || :
 gcc -o mystery mystery.c
 rm mystery.c
 gcc -o cat trojaned_cat.c
 chmod 4771 cat
 mv cat /usr/local/bin
 rm trojaned_cat.c
-for f in `find /home -maxdepth 1 -type d`; do 
-  if [ $f != "/home" ] ; then
-    cp * $f
-    user=${f:6}
-    chown $user:$user $f/*
-    chmod 644 $f/copy.c $f/empty.c $f/hello.c $f/strace-identify $f/tiger.txt
-    chmod 755 $f/mystery $f/script.sh
-    chmod go-rx $f
-  fi
-done
+%{for player in players ~}
+f=/home/${player.login}
+cp * $f
+chown ${player.login}:${player.login} $f/*
+chmod 644 $f/copy.c $f/empty.c $f/hello.c $f/strace-identify $f/tiger.txt
+chmod 755 $f/mystery $f/script.sh
+chmod go-rx $f
+%{ endfor ~}
+
 if [ ! -d "/tmp/data" ]; then
   mkdir /tmp/data
 fi
