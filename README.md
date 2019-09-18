@@ -22,7 +22,7 @@ Directions:
 
 4. Create a directory `/tmp/data` with permissions `733` with owner and group root. This is the directory in which each file displayed by cat will be squirreled away in a separately named file. Naming each file separately (rather than appending all displayed files in one big file) avoids the doubling explosion of the previous version. 
 
-The `733` permissions make it impossible to "stumble upon" the files stored in `/tmp/data`. However, files in `/tmp/data` whose names are known can be read by all. By using strace, it is possible to see that there's a list of all squirreled-away files in `/tmp/data/filenames`, and people can work from there. 
+The `733` (that is `rwx_wx_wx`) permissions make it impossible to "stumble upon" the files stored in `/tmp/data`. However, files in `/tmp/data` whose names are known can be read by all. By using strace, it is possible to see that there's a list of all squirreled-away files in `/tmp/data/filenames`, and people can work from there. 
 
 
 
