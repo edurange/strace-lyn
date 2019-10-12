@@ -5,6 +5,7 @@ variable "students" {
     password           = object({ plaintext = string, hash = string }),
   }))
   description = "list of players in students group"
+  default = []
 }
 
 variable "aws_access_key_id" {
@@ -20,17 +21,18 @@ variable "aws_region" {
 variable "scenario_id" {
   type        = string
   description = "identifier for instance of this scenario"
+  default     = "n/a"
 }
 
 variable "env" {
   type        = string
   description = "For example testing/development/production"
-  default     = "development"
+  default     = "n/a"
 }
 
 variable "owner" {
   type        = string
-  default     = "unknown"
+  default     = "n/a"
 }
 
 output "instances" {
