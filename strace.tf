@@ -5,6 +5,7 @@ variable "students" {
     password           = object({ plaintext = string, hash = string }),
   }))
   description = "list of players in students group"
+  
   default = []
 }
 
@@ -21,18 +22,17 @@ variable "aws_region" {
 variable "scenario_id" {
   type        = string
   description = "identifier for instance of this scenario"
-  default     = "n/a"
 }
 
 variable "env" {
   type        = string
   description = "For example testing/development/production"
-  default     = "n/a"
+  default     = "development"
 }
 
 variable "owner" {
   type        = string
-  default     = "n/a"
+  default     = "unknown"
 }
 
 output "instances" {
@@ -141,9 +141,45 @@ data "template_cloudinit_config" "strace" {
   }
 }
 
-resource "aws_security_group" "ssh_in_http_out" {
-  name = "strace/${var.scenario_id}"
+resource "aws_vpc" "cloud" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name 	= "strace/cloud"
+    scenario_id = var.scenario_id
+  }
+}
 
+resource "aws_internet_gateway" "default"{
+  vpc_id = aws_vpc.cloud.id
+}
+
+resource "aws_subnet" "public" {
+  vpc_id 	= aws_vpc.cloud.id
+  cidr_block    = "10.0.0.0/24"
+  tags = {
+    Name = "strace/public"
+  }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.cloud.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.default.id
+  }
+
+}
+
+resource "aws_route_table_association" "strace_subnut_route_table_association"{
+  subnet_id 	 = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id 
+}
+
+resource "aws_security_group" "ssh_in_http_out" {
+  vpc_id = aws_vpc.cloud.id
+  name = "strace/${var.scenario_id}"
+  
   ingress {
     from_port   = "22"
     to_port     = "22"
@@ -168,11 +204,16 @@ resource "aws_security_group" "ssh_in_http_out" {
 }
 
 resource "aws_instance" "strace" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.nano"
-  user_data_base64       = data.template_cloudinit_config.strace.rendered
-  key_name               = aws_key_pair.key.key_name
-  vpc_security_group_ids = [aws_security_group.ssh_in_http_out.id]
+  ami                    	 = data.aws_ami.ubuntu.id
+  instance_type          	 = "t2.nano"
+  private_ip 		 	 = "10.0.0.5"
+  associate_public_ip_address    = true
+  source_dest_check 		 = false
+  subnet_id 		 	 = aws_subnet.public.id
+  user_data_base64       	 = data.template_cloudinit_config.strace.rendered
+  key_name               	 = aws_key_pair.key.key_name
+  vpc_security_group_ids 	 = [aws_security_group.ssh_in_http_out.id]
+  
 
   tags = merge(local.common_tags, {
     Name = "strace"
