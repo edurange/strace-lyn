@@ -238,12 +238,24 @@ resource "aws_instance" "strace" {
     destination = "/home/ubuntu/strace/install"
   }
 
+  provisioner "file" {
+    source = "${path.module}/ttylog"
+    destination = "/home/ubuntu/strace"
+  }
+
+  provisioner "file" {
+    source = "${path.module}/tty_setup"
+    destination = "/home/ubuntu/strace/tty_setup"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "set -eux",
       "cloud-init status --wait --long",
       "cd /home/ubuntu/strace",
       "chmod +x install",
+      "chmod +x tty_setup",
+      "sudo ./tty_setup",
       "sudo ./install",
       "rm -rf /home/ubuntu/strace"
     ]
